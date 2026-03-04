@@ -5,6 +5,8 @@ module "vpc" {
     project_name = var.project_name
     environment = var.environment
     vpc_tags = var.vpc_tags
+     
+    
 
     # public subnets
     public_subnet_cidrs = var.public_subnet_cidrs
