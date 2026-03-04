@@ -18,3 +18,22 @@ resource "aws_security_group_rule" "mongodb" {
   to_port           = 22
   
 }
+
+resource "aws_security_group_rule" "redis" {
+  type              = "ingress"
+  security_group_id = local.reddis_security_group_id
+  source_security_group_id = local.bastion_sg_id
+  from_port         = 22
+  protocol          = "tcp"
+  to_port           = 22
+  
+}
+
+resource "aws_security_group_rule" "redis_egress" {
+  type              = "egress"
+  security_group_id = local.reddis_security_group_id
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+}

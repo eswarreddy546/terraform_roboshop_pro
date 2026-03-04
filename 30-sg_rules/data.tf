@@ -13,3 +13,7 @@ data "aws_ssm_parameter" "bastion_sg_id" {
 data "aws_ssm_parameter" "mongodb_security_group_id" {
   name = "/${var.project_name}/${var.environment}/mongodb_security_group_id"
 }
+
+data "aws_ssm_parameter" "reddis_security_group_id" {
+  name = "/${var.project_name}/${var.environment}/reddis_security_group_id"
+}
