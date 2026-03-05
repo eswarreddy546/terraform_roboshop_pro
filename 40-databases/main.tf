@@ -104,3 +104,46 @@ resource "terraform_data" "rabbitmq" {
     ]
   }
 }
+
+#mysql here start
+
+resource "aws_instance" "mysql" {
+    ami = "ami-0220d79f3f480ecf5"
+
+    instance_type = "t3.micro"
+    vpc_security_group_ids = [local.mysql_security_group_id]
+    subnet_id = local.database_subnetsg
+    iam_instance_profile = aws_iam_instance_profile.mysql.name
+    
+}
+
+resource "aws_iam_instance_profile" "mysql" {
+  name = "mysql"
+  role = "mysqlssmparameter"
+}
+
+resource "terraform_data" "mysql" {
+  triggers_replace = [
+    aws_instance.mysql.id
+  ]
+  
+  connection {
+    type     = "ssh"
+    user     = "ec2-user"
+    password = "DevOps321"
+    host     = aws_instance.mysql.private_ip
+  }
+
+  # terraform copies this file to mongodb server
+  provisioner "file" {
+    source = "bootstrap.sh"
+    destination = "/tmp/bootstrap.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+        "chmod +x /tmp/bootstrap.sh",
+        "sudo sh /tmp/bootstrap.sh mysql dev"
+    ]
+  }
+}
