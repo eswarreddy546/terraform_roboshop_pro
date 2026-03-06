@@ -70,24 +70,24 @@ resource "aws_security_group_rule" "r_egress" {
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
-# resource "aws_security_group_rule" "mysql" {
-#   type              = "ingress"
-#   security_group_id = local.mysql_security_group_id
-#   source_security_group_id = local.bastion_sg_id
-#   from_port         = 22
-#   protocol          = "tcp"
-#   to_port           = 22
+resource "aws_security_group_rule" "mysql" {
+  type              = "ingress"
+  security_group_id = local.mysql_security_group_id
+  source_security_group_id = local.bastion_sg_id
+  from_port         = 22
+  protocol          = "tcp"
+  to_port           = 22
   
-# }
+}
 
-# resource "aws_security_group_rule" "mysql_egress" {
-#   type              = "egress"
-#   security_group_id = local.mysql_security_group_id
-#   from_port         = 0
-#   to_port           = 0
-#   protocol          = "-1"
-#   cidr_blocks       = ["0.0.0.0/0"]
-# }
+resource "aws_security_group_rule" "mysql_egress" {
+  type              = "egress"
+  security_group_id = local.mysql_security_group_id
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+}
 
 
 # #catalogue
